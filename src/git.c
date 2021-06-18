@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void initGit(char *path) {
-  chdir(path);
+void initGit() {
   system("git init");
 }
 

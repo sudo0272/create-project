@@ -1,4 +1,4 @@
 #pragma once
 
-void createCProject(char *);
+void createCProject();
 
