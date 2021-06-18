@@ -2,6 +2,7 @@
 #include <string.h>
 #include "../include/c.h"
 #include "../include/git.h"
+#include "../include/python.h"
 #include <unistd.h>
 #include <sys/stat.h>
 
@@ -26,6 +27,8 @@ int main(int argc, char **argv) {
 
   if (!strcmp(language, "c")) {
     createCProject();
+  } else if (!strcmp(language, "python")) {
+    createPythonProject();
   }
 
   initGit();
