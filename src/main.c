@@ -18,8 +18,8 @@ int main(int argc, char **argv) {
   }
 
   projectName = argv[1];
-  path = argv[2];
-  language = argv[3];
+  language = argv[2];
+  path = argv[3];
 
   chdir(path);
   mkdir(projectName, 0777);
