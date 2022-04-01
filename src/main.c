@@ -11,21 +11,23 @@
 int main(int argc, char **argv) {
   char *language;
   char *path = (char *) malloc(sizeof(char) * PATH_MAX);
-  char *projectName;
+  char *name;
 
-  if (argc < 4) {
-    fprintf(stderr, "Invalid arguments");
+  if (argc < 3) {
+    fprintf(stderr, "Invalid arguments\n");
 
     return 1;
   }
 
-  projectName = argv[1];
+  realpath(argv[1], path);
+  name = strrchr(path, '/');
+  *name = '\0';
+  name ++;
   language = argv[2];
-  realpath(argv[3], path);
 
   chdir(path);
-  mkdir(projectName, 0777);
-  chdir(projectName);
+  mkdir(name, 0777);
+  chdir(name);
 
   if (!strcmp(language, "c")) {
     createCProject();
