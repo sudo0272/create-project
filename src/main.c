@@ -32,6 +32,10 @@ int main(int argc, char **argv) {
     { 0, 0, 0, 0 }
   };
 
+  // initialize options to default
+  pythonOptions.useVenv = 1;
+  pythonOptions.venvName = NULL;
+
   while (1) {
     current_option = getopt_long(argc, argv, "h", longOptions, &option_index);
 
