@@ -1,4 +1,7 @@
 #pragma once
 
-void createCProject();
+typedef struct {
+} COptions;
+
+void createCProject(const COptions *);
 

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void initGit() {
+void initGit(const GitOptions *options) {
   system("git init");
 }
 

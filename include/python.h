@@ -1,4 +1,9 @@
 #pragma once
 
-void createPythonProject();
+typedef struct {
+  int useVenv;
+  char *venvName;
+} PythonOptions;
+
+void createPythonProject(const PythonOptions *);
 

@@ -1,41 +1,86 @@
+#include <linux/limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/stat.h>
 #include <limits.h>
-#include "../include/c.h"
+#include <getopt.h>
+#include "../include/help.h"
 #include "../include/git.h"
+#include "../include/c.h"
 #include "../include/python.h"
 
 int main(int argc, char **argv) {
   char *language;
   char *path = (char *) malloc(sizeof(char) * PATH_MAX);
   char *name;
+  COptions cOptions;
+  PythonOptions pythonOptions;
+  GitOptions gitOptions;
+  int useGit;
+  int option_index = 0;
+  int current_option;
 
-  if (argc < 3) {
-    fprintf(stderr, "Invalid arguments\n");
+  struct option longOptions[] = {
+    { "git", no_argument, &useGit, 1 },
+    { "nogit", no_argument, &useGit, 0 },
+    { "venv", no_argument, &pythonOptions.useVenv, 1},
+    { "novenv", no_argument, &pythonOptions.useVenv, 0},
+    { "venv-name", required_argument, NULL, 'v' },
+    { "help", no_argument, NULL, 'h' },
+    { 0, 0, 0, 0 }
+  };
+
+  while (1) {
+    current_option = getopt_long(argc, argv, "h", longOptions, &option_index);
+
+    if (current_option == -1) {
+      break;
+    }
+
+    switch (current_option) {
+      case 0:
+        break;
+
+      case 'h':
+        printHelp();
+
+        return 0;
+
+      case '?':
+        break;
+
+      default:
+        abort();
+    }
+  }
+
+  if (optind + 2 != argc) {
+    printHelp();
 
     return 1;
   }
 
-  realpath(argv[1], path);
+  realpath(argv[optind ++], path);
   name = strrchr(path, '/');
   *name = '\0';
   name ++;
-  language = argv[2];
+  language = argv[optind];
 
   chdir(path);
   mkdir(name, 0777);
   chdir(name);
 
   if (!strcmp(language, "c")) {
-    createCProject();
+    createCProject(&cOptions);
   } else if (!strcmp(language, "python")) {
-    createPythonProject();
+    createPythonProject(&pythonOptions);
   }
 
-  initGit();
+  if (useGit) {
+    initGit(&gitOptions);
+  }
 
   free(path);
 

@@ -1,4 +1,7 @@
 #pragma once
 
-void initGit();
+typedef struct {
+} GitOptions;
+
+void initGit(const GitOptions *);
 
