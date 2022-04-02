@@ -6,4 +6,3 @@ typedef struct {
 } PythonOptions;
 
 void createPythonProject(const PythonOptions *);
-

@@ -5,4 +5,3 @@ void createCProject(const COptions *options) {
   mkdir("src", 0777);
   mkdir("include", 0777);
 }
-

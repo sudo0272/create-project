@@ -1,19 +1,19 @@
+#include "../include/c.h"
+#include "../include/git.h"
+#include "../include/help.h"
+#include "../include/python.h"
+#include <getopt.h>
+#include <limits.h>
 #include <linux/limits.h>
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <string.h>
 #include <sys/stat.h>
-#include <limits.h>
-#include <getopt.h>
-#include "../include/help.h"
-#include "../include/git.h"
-#include "../include/c.h"
-#include "../include/python.h"
+#include <unistd.h>
 
 int main(int argc, char **argv) {
   char *language;
-  char *path = (char *) malloc(sizeof(char) * PATH_MAX);
+  char *path = (char *)malloc(sizeof(char) * PATH_MAX);
   char *name;
   COptions cOptions;
   PythonOptions pythonOptions;
@@ -23,14 +23,13 @@ int main(int argc, char **argv) {
   int current_option;
 
   struct option longOptions[] = {
-    { "git", no_argument, &useGit, 1 },
-    { "nogit", no_argument, &useGit, 0 },
-    { "venv", no_argument, &pythonOptions.useVenv, 1},
-    { "novenv", no_argument, &pythonOptions.useVenv, 0},
-    { "venv-name", required_argument, NULL, 'v' },
-    { "help", no_argument, NULL, 'h' },
-    { 0, 0, 0, 0 }
-  };
+      {"git", no_argument, &useGit, 1},
+      {"nogit", no_argument, &useGit, 0},
+      {"venv", no_argument, &pythonOptions.useVenv, 1},
+      {"novenv", no_argument, &pythonOptions.useVenv, 0},
+      {"venv-name", required_argument, NULL, 'v'},
+      {"help", no_argument, NULL, 'h'},
+      {0, 0, 0, 0}};
 
   // initialize options to default
   pythonOptions.useVenv = 1;
@@ -44,19 +43,19 @@ int main(int argc, char **argv) {
     }
 
     switch (current_option) {
-      case 0:
-        break;
+    case 0:
+      break;
 
-      case 'h':
-        printHelp();
+    case 'h':
+      printHelp();
 
-        return 0;
+      return 0;
 
-      case '?':
-        break;
+    case '?':
+      break;
 
-      default:
-        abort();
+    default:
+      abort();
     }
   }
 
@@ -66,10 +65,10 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  realpath(argv[optind ++], path);
+  realpath(argv[optind++], path);
   name = strrchr(path, '/');
   *name = '\0';
-  name ++;
+  name++;
   language = argv[optind];
 
   chdir(path);
@@ -90,4 +89,3 @@ int main(int argc, char **argv) {
 
   return 0;
 }
-
